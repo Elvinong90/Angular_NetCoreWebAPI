@@ -7,11 +7,13 @@ namespace TestCMSCoreAPI.Helpers
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+        private readonly IHostEnvironment _environment;
 
-        public CustomErrorHandlerMiddleware(RequestDelegate next, ILogger<CustomErrorHandlerMiddleware> logger)
+        public CustomErrorHandlerMiddleware(RequestDelegate next, ILogger<CustomErrorHandlerMiddleware> logger, IHostEnvironment environment)
         {
             _next = next;
             _logger = logger;
+            _environment = environment;
         }
 
         public async Task Invoke(HttpContext context)
@@ -20,15 +22,22 @@ namespace TestCMSCoreAPI.Helpers
             {
                 await _next(context);
             }
-            catch (Exception error)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
+
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                _logger.LogError(error, error.Message);
+                var response = _environment.IsDevelopment() ?
+                    new CustomErrorDTO(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString()) :
+                    new CustomErrorDTO(context.Response.StatusCode, "Internal Server Error");
 
-                var result = JsonSerializer.Serialize(new { Message = error?.Message });
-                await context.Response.WriteAsync(result);
+                var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
+                var json = JsonSerializer.Serialize(response, options);
+
+                await context.Response.WriteAsync(json);
             }
         }
     }

@@ -12,6 +12,10 @@ namespace ServiceManager.DTO
         public class Detail
         {
             [Required]
+            [Display(Name = "Customer ID")]
+            public string CustomerID { get; set; }
+
+            [Required]
             [Display(Name = "Full Name")]
             public string FullName { get; set; }
 
