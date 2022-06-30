@@ -24,6 +24,12 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<CustomValidationFilter>();
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("LocalURL",
+        builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -43,6 +49,8 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<CustomErrorHandlerMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
