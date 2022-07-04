@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Loader } from 'src/app/Helper/Loader';
+import { ProductServices } from 'src/app/Services/ProductServices';
 import { ProductDTO } from 'src/app/DTO/IProduct';
+
+import { ProductFormComponent } from './product-form/product-form.component';
 
 @Component({
   selector: 'app-product',
@@ -17,8 +19,8 @@ export class ProductComponent implements OnInit {
   dataForm: FormGroup | undefined;
 
   constructor(
-    private httpClient: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private productServices: ProductServices
   ) {}
 
   ngOnInit(): void {
@@ -27,10 +29,15 @@ export class ProductComponent implements OnInit {
   }
 
   initializeForm() {
-    this.dataForm = this.formBuilder.group({
-      ID: [''],
-    });
+    this.dataForm = this.formBuilder.group({});
   }
 
-  getProducts() {}
+  getProducts() {
+    this.productServices.getProducts().subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: () => {},
+    });
+  }
 }

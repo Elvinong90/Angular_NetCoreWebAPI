@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Loader } from 'src/app/Helper/Loader';
 import { customerDTO } from 'src/app/DTO/ICustomer';
+
+import { CustomerFormComponent } from './customer-form/customer-form.component';
 
 @Component({
   selector: 'app-customer',
@@ -16,10 +17,7 @@ export class CustomerComponent implements OnInit {
 
   dataForm: FormGroup | undefined;
 
-  constructor(
-    private httpClient: HttpClient,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.initializeForm();
