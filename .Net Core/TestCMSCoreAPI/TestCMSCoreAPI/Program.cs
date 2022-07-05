@@ -6,6 +6,8 @@ using ServiceManager;
 using TestCMSCoreAPI.Helper;
 using TestCMSCoreAPI.Helpers;
 
+const string CustomCorPolicy = "CustomCorPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,7 +16,6 @@ builder.Services.AddDbContext<DBContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DBConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddServiceManagerCollection();
@@ -26,7 +27,7 @@ builder.Services.AddControllers(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("LocalURL",
+    options.AddPolicy(CustomCorPolicy,
         builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
 });
 
@@ -50,7 +51,7 @@ app.UseMiddleware<CustomErrorHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 
-app.UseCors();
+app.UseCors(CustomCorPolicy);
 
 app.UseAuthorization();
 

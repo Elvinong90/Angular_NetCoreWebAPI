@@ -1,1 +1,1 @@
-export interface customerDTO {}
+export interface CustomerDTO {}

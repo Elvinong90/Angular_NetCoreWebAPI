@@ -48,3 +48,18 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.wrapper {
+  padding-top: 100px;
+  height: 100vh;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 0px;
+
+  .mat-table {
+    overflow: auto;
+  }
+}

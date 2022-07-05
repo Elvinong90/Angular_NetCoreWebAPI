@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Loader } from 'src/app/Helper/Loader';
-import { customerDTO } from 'src/app/DTO/ICustomer';
+import { CustomerDTO } from 'src/app/DTO/ICustomer';
+import { ModuleType } from 'src/app/Enum/EnumModule';
 
 import { CustomerFormComponent } from './customer-form/customer-form.component';
 
@@ -12,22 +12,16 @@ import { CustomerFormComponent } from './customer-form/customer-form.component';
   styleUrls: ['./customer.component.scss'],
 })
 export class CustomerComponent implements OnInit {
-  ListOfCustomer: customerDTO[] = [];
-  DataSource = new MatTableDataSource<customerDTO>([]);
+  Module = ModuleType.Customer;
 
-  dataForm: FormGroup | undefined;
+  dataSource = new MatTableDataSource<CustomerDTO>([]);
+  listofData: CustomerDTO[] = [];
+  singleData: CustomerDTO | undefined;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.initializeForm();
     this.getCustomers();
-  }
-
-  initializeForm() {
-    this.dataForm = this.formBuilder.group({
-      ID: [''],
-    });
   }
 
   getCustomers() {}

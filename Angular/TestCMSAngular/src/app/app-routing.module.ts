@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CustomerComponent } from './Component/customer/customer.component';
-import { ProductComponent } from './Component/product/product.component';
-import { TransactionComponent } from './Component/transaction/transaction.component';
-import { NotfoundComponent } from './Component/_shared/notfound/notfound.component';
+import { CustomerComponent } from './Component/pages/customer/customer.component';
+import { ProductComponent } from './Component/pages/product/product.component';
+import { TransactionComponent } from './Component/pages/transaction/transaction.component';
+import { NotfoundComponent } from './Component/shared/notfound/notfound.component';
 
 const routes: Routes = [
   { path: '', component: CustomerComponent },
