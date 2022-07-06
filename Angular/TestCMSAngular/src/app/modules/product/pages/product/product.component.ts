@@ -8,7 +8,7 @@ import { ProductDTO } from 'src/app/data/schema/product.model';
 import {
   StatusObject,
   DialogPassData,
-} from 'src/app/shared/model/common.model';
+} from 'src/app/shared/models/common.model';
 import { ModuleType } from 'src/app/shared/enum/module.enum';
 import { FormAction } from 'src/app/shared/enum/common.enum';
 

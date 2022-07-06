@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProductService } from 'src/app/data/services/product.service';
 import { ProductDTO } from 'src/app/data/schema/product.model';
-import { DialogPassData } from 'src/app/shared/model/common.model';
+import { DialogPassData } from 'src/app/shared/models/common.model';
 import { FormAction } from 'src/app/shared/enum/common.enum';
 
 @Component({

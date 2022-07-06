@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { LayoutModule } from '../layouts/layout.module';
+
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -13,14 +15,25 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 
-import { LoaderComponent } from './component/loader/loader.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { DialogComponent } from './components/dialogs/dialog/dialog.component';
+import { DialogHeaderComponent } from './components/dialogs/dialog-header/dialog-header.component';
+import { DialogFooterComponent } from './components/dialogs/dialog-footer/dialog-footer.component';
 
 @NgModule({
-  declarations: [LoaderComponent],
+  declarations: [
+    LoaderComponent,
+    SnackbarComponent,
+    DialogComponent,
+    DialogHeaderComponent,
+    DialogFooterComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    LayoutModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
@@ -36,6 +49,7 @@ import { LoaderComponent } from './component/loader/loader.component';
   exports: [
     ReactiveFormsModule,
     HttpClientModule,
+    LayoutModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,

@@ -1,15 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CustomerComponent } from './modules/customer/customer.component';
-import { ProductComponent } from './modules/product/product.component';
-import { TransactionComponent } from './modules/transaction/transaction.component';
+import { NotfoundComponent } from './layouts/notfound/notfound.component';
 
 const routes: Routes = [
-  { path: '', component: CustomerComponent },
-  { path: 'customer', component: CustomerComponent },
-  { path: 'product', component: ProductComponent },
-  { path: 'transaction', component: TransactionComponent },
+  { path: '', redirectTo: 'customer', pathMatch: 'full' },
+
+  {
+    path: 'customer',
+    loadChildren: () =>
+      import('./modules/customer/customer.module').then(
+        (m) => m.CustomerModule
+      ),
+  },
+  {
+    path: 'product',
+    loadChildren: () =>
+      import('./modules/product/product.module').then((m) => m.ProductModule),
+  },
+  {
+    path: 'transaction',
+    loadChildren: () =>
+      import('./modules/transaction/transaction.module').then(
+        (m) => m.TransactionModule
+      ),
+  },
+
+  { path: '**', component: NotfoundComponent },
 ];
 
 @NgModule({
