@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModuleType } from 'src/app/Enum/EnumModule';
+import { ModuleType } from 'src/app/shared/enum/module.enum';
 
 @Component({
   selector: 'app-transaction',

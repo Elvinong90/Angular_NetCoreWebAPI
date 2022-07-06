@@ -3,11 +3,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { ProductServices } from 'src/app/Services/ProductServices';
-import { ProductDTO } from 'src/app/DTO/IProduct';
-import { StatusObject, DialogPassData } from 'src/app/DTO/ICommon';
-import { ModuleType } from 'src/app/Enum/EnumModule';
-import { FormAction } from 'src/app/Enum/EnumCommon';
+import { ProductService } from 'src/app/data/services/product.service';
+import { ProductDTO } from 'src/app/data/schema/product.model';
+import {
+  StatusObject,
+  DialogPassData,
+} from 'src/app/shared/model/common.model';
+import { ModuleType } from 'src/app/shared/enum/module.enum';
+import { FormAction } from 'src/app/shared/enum/common.enum';
 
 import { ProductFormComponent } from './product-form/product-form.component';
 
@@ -29,7 +32,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private productServices: ProductServices
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +53,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   getProducts() {
-    this.productServices.getProducts().subscribe({
+    this.productService.getProducts().subscribe({
       next: (data) => {
         this.dataSource.data = this.listofData = data;
       },

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModuleType } from 'src/app/Enum/EnumModule';
+import { ModuleType } from 'src/app/shared/enum/module.enum';
 
 @Component({
   selector: 'app-topbar',

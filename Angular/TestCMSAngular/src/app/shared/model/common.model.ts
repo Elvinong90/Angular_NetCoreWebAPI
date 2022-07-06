@@ -1,4 +1,4 @@
-import { FormAction } from '../Enum/EnumCommon';
+import { FormAction } from '../enum/common.enum';
 
 export interface StatusObject {
   status: boolean;

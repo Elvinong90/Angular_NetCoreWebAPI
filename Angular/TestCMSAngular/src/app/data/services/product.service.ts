@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { customerDTO } from '../DTO/ICustomer';
+import { ProductDTO } from '../schema/product.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CustomerServices {
+export class ProductService {
   private WebAddress = environment.WebAddress;
 
   constructor(private httpClient: HttpClient) {}
 
-  getCustomers() {
-    this.httpClient.get<customerDTO[]>(this.WebAddress + '/api/customer');
+  getProducts() {
+    return this.httpClient.get<ProductDTO[]>(this.WebAddress + '/api/product');
   }
 
-  addCustomer() {}
+  addProduct() {}
 
-  updateCustomer() {}
+  updateProduct() {}
 
-  deleteCustomer() {}
+  deleteProduct() {}
 }

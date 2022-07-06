@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -13,14 +13,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 
-import { TopbarComponent } from './topbar/topbar.component';
-import { NotfoundComponent } from './notfound/notfound.component';
-import { LoaderComponent } from './loader/loader.component';
+import { LoaderComponent } from './component/loader/loader.component';
 
 @NgModule({
-  declarations: [TopbarComponent, NotfoundComponent, LoaderComponent],
+  declarations: [LoaderComponent],
   imports: [
-    BrowserModule,
+    CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatTableModule,
@@ -36,8 +34,6 @@ import { LoaderComponent } from './loader/loader.component';
   providers: [],
   bootstrap: [],
   exports: [
-    TopbarComponent,
-    NotfoundComponent,
     ReactiveFormsModule,
     HttpClientModule,
     MatTableModule,
