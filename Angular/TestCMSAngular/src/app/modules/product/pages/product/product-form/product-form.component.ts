@@ -12,7 +12,7 @@ import { FormAction } from 'src/app/shared/enum/common.enum';
   styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent implements OnInit {
-  dataForm: FormGroup | undefined;
+  dataForm!: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<ProductFormComponent>,
@@ -33,7 +33,7 @@ export class ProductFormComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       ProductNo: ['', [Validators.required]],
       Description: ['', [Validators.required]],
-      Price: ['', [Validators.required]],
+      Price: [0, [Validators.required]],
     });
   }
 
@@ -49,5 +49,11 @@ export class ProductFormComponent implements OnInit {
 
   onError(control: string, error: string) {
     return this.dataForm!.get(control)?.hasError(error);
+  }
+
+  submitForm() {
+    if (!this.dataForm.valid) {
+      return;
+    }
   }
 }

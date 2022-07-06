@@ -1,1 +1,23 @@
-<p>product-form works!</p>
+<form [formGroup]="dataForm">
+  <app-dialog-header title="New Product"></app-dialog-header>
+
+  <mat-form-field class="mat-formfield-container">
+    <mat-label>Product No</mat-label>
+    <input matInput formControlName="ProductNo" />
+  </mat-form-field>
+
+  <mat-form-field class="mat-formfield-container">
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="Description" rows="2"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="mat-formfield-container">
+    <mat-label>Price</mat-label>
+    <input matInput formControlName="Price" />
+  </mat-form-field>
+
+  <app-dialog-footer
+    [dialogRef]="dialogRef"
+    (submitClick)="submitForm()"
+  ></app-dialog-footer>
+</form>
