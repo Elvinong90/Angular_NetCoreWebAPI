@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NotfoundComponent } from './layouts/notfound/notfound.component';
+import { NotfoundComponent } from './shared/layouts/notfound/notfound.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'customer', pathMatch: 'full' },

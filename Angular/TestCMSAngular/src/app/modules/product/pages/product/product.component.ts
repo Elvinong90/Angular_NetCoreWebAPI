@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
+import { finalize } from 'rxjs';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { ProductService } from 'src/app/data/services/product.service';
 import { ProductDTO } from 'src/app/data/schema/product.model';
 import {
@@ -11,7 +13,6 @@ import {
 } from 'src/app/shared/models/common.model';
 import { ModuleType } from 'src/app/shared/enum/module.enum';
 import { FormAction } from 'src/app/shared/enum/common.enum';
-
 import { ProductFormComponent } from './product-form/product-form.component';
 
 @Component({
@@ -32,6 +33,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
+    private loaderService: LoaderService,
     private productService: ProductService
   ) {}
 
@@ -53,12 +55,21 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   getProducts() {
-    this.productService.getProducts().subscribe({
-      next: (data) => {
-        this.dataSource.data = this.listofData = data;
-      },
-      error: () => {},
-    });
+    this.loaderService.startLoading();
+
+    this.productService
+      .getProducts()
+      .pipe(
+        finalize(() => {
+          this.loaderService.hideLoading();
+        })
+      )
+      .subscribe({
+        next: (data) => {
+          this.dataSource.data = this.listofData = data;
+        },
+        error: () => {},
+      });
   }
 
   getProductData(id: string) {

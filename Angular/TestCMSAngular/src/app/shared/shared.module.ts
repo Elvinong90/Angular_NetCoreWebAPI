@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { LayoutModule } from '../layouts/layout.module';
-
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -16,28 +14,36 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+
+import { TopbarComponent } from './layouts/topbar/topbar.component';
+import { NotfoundComponent } from './layouts/notfound/notfound.component';
 
 import { LoaderComponent } from './components/loader/loader.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { DialogComponent } from './components/dialogs/dialog/dialog.component';
 import { DialogHeaderComponent } from './components/dialogs/dialog-header/dialog-header.component';
 import { DialogFooterComponent } from './components/dialogs/dialog-footer/dialog-footer.component';
+import { AddButtonComponent } from './components/buttons/add-button/add-button.component';
 
 @NgModule({
   declarations: [
+    TopbarComponent,
+    NotfoundComponent,
     LoaderComponent,
     SnackbarComponent,
     DialogComponent,
     DialogHeaderComponent,
     DialogFooterComponent,
+    AddButtonComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    LayoutModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
@@ -49,6 +55,8 @@ import { DialogFooterComponent } from './components/dialogs/dialog-footer/dialog
     MatDialogModule,
     MatSnackBarModule,
     MatIconModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {
@@ -64,7 +72,6 @@ import { DialogFooterComponent } from './components/dialogs/dialog-footer/dialog
   exports: [
     ReactiveFormsModule,
     HttpClientModule,
-    LayoutModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
@@ -73,14 +80,19 @@ import { DialogFooterComponent } from './components/dialogs/dialog-footer/dialog
     MatInputModule,
     MatDatepickerModule,
     MatSelectModule,
+    TopbarComponent,
+    NotfoundComponent,
     MatDialogModule,
     MatSnackBarModule,
     MatIconModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
     LoaderComponent,
     SnackbarComponent,
     DialogComponent,
     DialogHeaderComponent,
     DialogFooterComponent,
+    AddButtonComponent,
   ],
   entryComponents: [DialogComponent],
 })

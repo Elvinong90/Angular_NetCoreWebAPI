@@ -1,1 +1,10 @@
-<p>loader works!</p>
+<mat-progress-bar
+  class="loading-topbar"
+  color="accent"
+  mode="indeterminate"
+  [hidden]="
+    !loaderService.isLoading() &&
+    loaderService.getloadingIndicator() !== LoadingIndicator.LOAD_DATA
+  "
+>
+</mat-progress-bar>

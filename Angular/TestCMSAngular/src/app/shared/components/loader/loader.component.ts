@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService, LoadingIndicator } from '../../services/loader.service';
 
 @Component({
   selector: 'app-loader',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loader.component.scss'],
 })
 export class LoaderComponent implements OnInit {
-  constructor() {}
+  LoadingIndicator = LoadingIndicator;
+
+  constructor(public loaderService: LoaderService) {}
 
   ngOnInit(): void {}
 }
