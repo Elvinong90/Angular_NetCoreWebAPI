@@ -2,9 +2,32 @@
   class="loading-topbar"
   color="accent"
   mode="indeterminate"
-  [hidden]="
-    !loaderService.isLoading() &&
-    loaderService.getloadingIndicator() !== LoadingIndicator.LOAD_DATA
+  *ngIf="
+    topbarLocated &&
+    isLoading() &&
+    getLoadingIndicator() === LoadingIndicator.LOAD_DATA
   "
 >
 </mat-progress-bar>
+
+<mat-spinner
+  diameter="20"
+  class="loading-modal ms-3"
+  *ngIf="
+    topmodalLocated &&
+    isLoading() &&
+    getLoadingIndicator() === LoadingIndicator.LOAD_MODAL
+  "
+>
+</mat-spinner>
+
+<mat-spinner
+  color="accent"
+  diameter="32"
+  class="ms-3"
+  *ngIf="
+    modalsubmitLocated &&
+    isLoading() &&
+    getLoadingIndicator() === LoadingIndicator.SUBMIT_MODAL
+  "
+></mat-spinner>

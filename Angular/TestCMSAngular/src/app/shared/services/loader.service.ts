@@ -11,8 +11,8 @@ export enum LoadingIndicator {
   providedIn: 'root',
 })
 export class LoaderService {
-  private loader: boolean = false;
-  private loaderIndicator?: LoadingIndicator;
+  protected loader: boolean = false;
+  protected loaderIndicator?: LoadingIndicator = undefined;
 
   isLoading() {
     return this.loader;
@@ -22,7 +22,12 @@ export class LoaderService {
     return this.loaderIndicator;
   }
 
-  startLoading(indicator: LoadingIndicator = LoadingIndicator.LOAD_DATA) {
+  startLoading() {
+    this.loader = true;
+    this.loaderIndicator = LoadingIndicator.LOAD_DATA;
+  }
+
+  overrideLoading(indicator: LoadingIndicator) {
     this.loader = true;
     this.loaderIndicator = indicator;
   }

@@ -1,6 +1,6 @@
 import { FormAction } from '../enum/common.enum';
 
-export interface StatusObject {
+export interface GenericObject {
   status: boolean;
   message: string;
 }

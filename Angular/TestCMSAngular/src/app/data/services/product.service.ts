@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ProductDTO } from '../schema/product.model';
+import { ProductDTO, ProductDetailDTO } from '../schema/product.model';
+import { GenericObject } from 'src/app/shared/models/common.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,15 +10,29 @@ import { environment } from 'src/environments/environment';
 export class ProductService {
   private WebAddress = environment.WebAddress;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getProducts() {
-    return this.httpClient.get<ProductDTO[]>(this.WebAddress + '/api/product');
+    return this.http.get<ProductDTO[]>(this.WebAddress + '/api/product');
   }
 
-  addProduct() {}
+  addProduct(model: ProductDetailDTO) {
+    return this.http.post<GenericObject>(
+      this.WebAddress + '/api/product',
+      model
+    );
+  }
 
-  updateProduct() {}
+  updateProduct(ID: string, model: ProductDetailDTO) {
+    return this.http.put<GenericObject>(
+      this.WebAddress + '/api/product/ID/' + ID,
+      model
+    );
+  }
 
-  deleteProduct() {}
+  deleteProduct(ID: string) {
+    return this.http.delete<GenericObject>(
+      this.WebAddress + '/api/product/ID/' + ID
+    );
+  }
 }

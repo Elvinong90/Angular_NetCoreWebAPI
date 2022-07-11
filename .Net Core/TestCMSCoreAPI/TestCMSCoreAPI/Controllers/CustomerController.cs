@@ -22,7 +22,7 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(customers);
         }
 
-        [HttpGet("ID")]
+        [HttpGet("{ID}")]
         public async Task<IActionResult> GetCustomerByID(Guid ID)
         {
             var customer = await customerService.GetCustomerByID(ID);
@@ -42,14 +42,14 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPut("ID")]
+        [HttpPut("{ID}")]
         public async Task<IActionResult> UpdateCustomer(Guid ID, [FromBody] CustomerDTO.OnUpdate Request)
         {
             bool result = await customerService.UpdateCustomer(ID, Request, UserID);
             return Ok(result);
         }
 
-        [HttpDelete("ID")]
+        [HttpDelete("{ID}")]
         public async Task<IActionResult> DeleteCustomer(Guid ID)
         {
             bool result = await customerService.DeleteCustomer(ID, UserID);

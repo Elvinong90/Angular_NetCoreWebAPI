@@ -2,13 +2,16 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { finalize } from 'rxjs';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import {
+  LoaderService,
+  LoadingIndicator,
+} from 'src/app/shared/services/loader.service';
 import { ProductService } from 'src/app/data/services/product.service';
 import { ProductDTO } from 'src/app/data/schema/product.model';
 import {
-  StatusObject,
+  GenericObject,
   DialogPassData,
 } from 'src/app/shared/models/common.model';
 import { ModuleType } from 'src/app/shared/enum/module.enum';
@@ -55,21 +58,12 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   getProducts() {
-    this.loaderService.startLoading();
-
-    this.productService
-      .getProducts()
-      .pipe(
-        finalize(() => {
-          this.loaderService.hideLoading();
-        })
-      )
-      .subscribe({
-        next: (data) => {
-          this.dataSource.data = this.listofData = data;
-        },
-        error: () => {},
-      });
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.dataSource.data = this.listofData = data;
+      },
+      error: () => {},
+    });
   }
 
   getProductData(id: string) {
@@ -82,6 +76,8 @@ export class ProductComponent implements OnInit, AfterViewInit {
         formaction: FormAction.Add,
       },
     });
+
+    this.getDialogResult(dialogRef);
   }
 
   openEditModal(id: string) {
@@ -89,13 +85,15 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
     if (this.singleData) {
       const passData: DialogPassData = {
-        formaction: FormAction.Add,
+        formaction: FormAction.Update,
         content: this.singleData,
       };
 
       let dialogRef = this.dialog.open(ProductFormComponent, {
         data: passData,
       });
+
+      this.getDialogResult(dialogRef);
     }
   }
 
@@ -105,7 +103,16 @@ export class ProductComponent implements OnInit, AfterViewInit {
     if (this.singleData) {
       const passData: DialogPassData = {
         formaction: FormAction.Delete,
+        content: this.singleData.id,
       };
     }
+  }
+
+  getDialogResult(dialogRef: MatDialogRef<any, any>) {
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getProducts();
+      }
+    });
   }
 }

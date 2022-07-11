@@ -3,7 +3,6 @@ export enum FormAction {
   Update,
   Delete,
   View,
-  Other,
 }
 
 export enum Status {

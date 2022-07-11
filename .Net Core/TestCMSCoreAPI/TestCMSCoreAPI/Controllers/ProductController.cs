@@ -22,7 +22,7 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(products);
         }
 
-        [HttpGet("ID")]
+        [HttpGet("{ID}")]
         public async Task<IActionResult> GetProductByID(Guid ID)
         {
             var product = await productService.GetProductByID(ID);
@@ -42,14 +42,14 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPut("ID")]
+        [HttpPut("{ID}")]
         public async Task<IActionResult> UpdateProduct(Guid ID, [FromBody] ProductDTO.OnUpdate Request)
         {
             bool result = await productService.UpdateProduct(ID, Request, UserID);
             return Ok(result);
         }
 
-        [HttpDelete("ID")]
+        [HttpDelete("{ID}")]
         public async Task<IActionResult> DeleteProduct(Guid ID)
         {
             bool result = await productService.DeleteProduct(ID, UserID);
