@@ -35,7 +35,7 @@ namespace RepositoryManager.Repository
 
         public void Update(T entity)
         {
-            _context.Entry(_dbSet).State = EntityState.Modified;
+            _dbSet.Update(entity);
         }
 
         public void Delete(T entity)
