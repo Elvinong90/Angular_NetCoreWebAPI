@@ -25,14 +25,14 @@ export class ProductService {
 
   updateProduct(ID: string, model: ProductDetailDTO) {
     return this.http.put<GenericObject>(
-      this.WebAddress + '/api/product/ID/' + ID,
+      this.WebAddress + '/api/product/' + ID,
       model
     );
   }
 
   deleteProduct(ID: string) {
     return this.http.delete<GenericObject>(
-      this.WebAddress + '/api/product/ID/' + ID
+      this.WebAddress + '/api/product/' + ID
     );
   }
 }

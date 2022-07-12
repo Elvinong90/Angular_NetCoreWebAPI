@@ -8,6 +8,5 @@ namespace RepositoryManager.Repository
     public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         public ProductRepository(DBContext context, ILogger logger) : base(context, logger) { }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceManager.DTO;
 using ServiceManager.Interface;
+using TestCMSCoreAPI.Helpers;
 
 namespace TestCMSCoreAPI.Controllers
 {
@@ -39,21 +40,42 @@ namespace TestCMSCoreAPI.Controllers
         public async Task<IActionResult> CreateProduct([FromBody] ProductDTO.OnAdd Request)
         {
             bool result = await productService.AddProduct(Request, UserID);
-            return Ok(result);
+
+            var output = new CommonDto.GenericObject()
+            {
+                Status = result,
+                Message = result ? Constants.Message.msgCreateOK : Constants.Message.msgCreateNotOK
+            };
+            
+            return Ok(output);
         }
 
         [HttpPut("{ID}")]
         public async Task<IActionResult> UpdateProduct(Guid ID, [FromBody] ProductDTO.OnUpdate Request)
         {
             bool result = await productService.UpdateProduct(ID, Request, UserID);
-            return Ok(result);
+
+            var output = new CommonDto.GenericObject()
+            {
+                Status = result,
+                Message = result ? Constants.Message.msgUpdateOK : Constants.Message.msgUpdateNotOK
+            };
+
+            return Ok(output);
         }
 
         [HttpDelete("{ID}")]
         public async Task<IActionResult> DeleteProduct(Guid ID)
         {
             bool result = await productService.DeleteProduct(ID, UserID);
-            return Ok(result);
+
+            var output = new CommonDto.GenericObject()
+            {
+                Status = result,
+                Message = result ? Constants.Message.msgDeleteOK : Constants.Message.msgDeleteNotOK
+            };
+
+            return Ok(output);
         }
     }
 }

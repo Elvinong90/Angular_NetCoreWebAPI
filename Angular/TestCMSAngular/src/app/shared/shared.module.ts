@@ -24,7 +24,6 @@ import { NotfoundComponent } from './layouts/notfound/notfound.component';
 
 import { LoaderComponent } from './components/loader/loader.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
-import { DialogComponent } from './components/dialogs/dialog/dialog.component';
 import { DialogHeaderComponent } from './components/dialogs/dialog-header/dialog-header.component';
 import { DialogFooterComponent } from './components/dialogs/dialog-footer/dialog-footer.component';
 import { AddButtonComponent } from './components/buttons/add-button/add-button.component';
@@ -35,7 +34,6 @@ import { AddButtonComponent } from './components/buttons/add-button/add-button.c
     NotfoundComponent,
     LoaderComponent,
     SnackbarComponent,
-    DialogComponent,
     DialogHeaderComponent,
     DialogFooterComponent,
     AddButtonComponent,
@@ -89,11 +87,10 @@ import { AddButtonComponent } from './components/buttons/add-button/add-button.c
     MatProgressSpinnerModule,
     LoaderComponent,
     SnackbarComponent,
-    DialogComponent,
     DialogHeaderComponent,
     DialogFooterComponent,
     AddButtonComponent,
   ],
-  entryComponents: [DialogComponent],
+  entryComponents: [],
 })
 export class SharedModule {}

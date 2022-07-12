@@ -8,17 +8,17 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogFooterComponent implements OnInit {
   @Input() dialogRef!: MatDialogRef<unknown>;
-  @Input() submitTitle = 'Submit';
+  @Input() confirmTitle = 'Confirm';
   @Input() closedTitle = 'Close';
 
-  @Output() submitClick = new EventEmitter<boolean>();
+  @Output() confirmClick = new EventEmitter<boolean>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  onSubmitClick(): void {
-    this.submitClick.next(true);
+  onConfirmClick(): void {
+    this.confirmClick.next(true);
   }
 
   onNoClick(): void {

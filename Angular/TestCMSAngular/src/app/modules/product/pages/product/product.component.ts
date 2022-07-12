@@ -1,19 +1,17 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { finalize } from 'rxjs';
-import {
-  LoaderService,
-  LoadingIndicator,
-} from 'src/app/shared/services/loader.service';
 import { ProductService } from 'src/app/data/services/product.service';
 import { ProductDTO } from 'src/app/data/schema/product.model';
-import {
-  GenericObject,
-  DialogPassData,
-} from 'src/app/shared/models/common.model';
+import { DialogPassData } from 'src/app/shared/models/common.model';
 import { ModuleType } from 'src/app/shared/enum/module.enum';
 import { FormAction } from 'src/app/shared/enum/common.enum';
 import { ProductFormComponent } from './product-form/product-form.component';
@@ -36,7 +34,6 @@ export class ProductComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private loaderService: LoaderService,
     private productService: ProductService
   ) {}
 
@@ -71,10 +68,12 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   openNewModal() {
+    const passData: DialogPassData = {
+      formaction: FormAction.Add,
+    };
+
     let dialogRef = this.dialog.open(ProductFormComponent, {
-      data: {
-        formaction: FormAction.Add,
-      },
+      data: passData,
     });
 
     this.getDialogResult(dialogRef);
@@ -103,7 +102,6 @@ export class ProductComponent implements OnInit, AfterViewInit {
     if (this.singleData) {
       const passData: DialogPassData = {
         formaction: FormAction.Delete,
-        content: this.singleData.id,
       };
     }
   }

@@ -5,6 +5,7 @@ import {
   LoadingIndicator,
 } from 'src/app/shared/services/loader.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { ProductService } from 'src/app/data/services/product.service';
 import {
   ProductDTO,
@@ -15,7 +16,6 @@ import {
   GenericObject,
 } from 'src/app/shared/models/common.model';
 import { FormAction } from 'src/app/shared/enum/common.enum';
-import { Action } from 'rxjs/internal/scheduler/Action';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -25,12 +25,14 @@ import { Observable } from 'rxjs';
 })
 export class ProductFormComponent implements OnInit {
   dataForm!: FormGroup;
+  FormAction = FormAction;
 
   constructor(
     public dialogRef: MatDialogRef<ProductFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogPassData,
     private formBuilder: FormBuilder,
     private loaderService: LoaderService,
+    private snackbarService: SnackbarService,
     private productService: ProductService
   ) {}
 
@@ -85,10 +87,15 @@ export class ProductFormComponent implements OnInit {
     postAction.subscribe({
       next: (data) => {
         if (data.status) {
+          this.snackbarService.showSuccessSnackbar(data.message);
           this.dialogRef.close(true);
+        } else {
+          this.snackbarService.showWarningSnackbar(data.message);
         }
       },
-      error: () => {},
+      error: () => {
+        this.snackbarService.showErrorSnackbar();
+      },
     });
   }
 }

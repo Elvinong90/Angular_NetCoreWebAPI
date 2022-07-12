@@ -34,7 +34,6 @@ namespace RepositoryManager
                 {
                     result = await _context.SaveChangesAsync();
                     transaction.Commit();
-
                 }
                 catch (Exception ex)
                 {

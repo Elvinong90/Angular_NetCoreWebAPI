@@ -1,5 +1,9 @@
 <form [formGroup]="dataForm">
-  <app-dialog-header title="New Product"></app-dialog-header>
+  <app-dialog-header
+    [title]="
+      data.formaction === FormAction.Add ? 'New Product' : 'Edit Product'
+    "
+  ></app-dialog-header>
 
   <mat-form-field class="mat-formfield-container">
     <mat-label>Product No</mat-label>
@@ -33,7 +37,10 @@
   </mat-form-field>
 
   <app-dialog-footer
+    [confirmTitle]="
+      data.formaction === FormAction.Add ? 'Submit' : 'Save Changes'
+    "
+    (confirmClick)="submitForm()"
     [dialogRef]="dialogRef"
-    (submitClick)="submitForm()"
   ></app-dialog-footer>
 </form>

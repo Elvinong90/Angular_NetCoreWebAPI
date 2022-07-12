@@ -1,1 +1,8 @@
-<p>snackbar works!</p>
+<div>
+  <div class="message-container">
+    <span [innerHTML]="data"></span>
+  </div>
+  <div class="button-container">
+    <button mat-button (click)="dismiss()">Close</button>
+  </div>
+</div>
