@@ -98,4 +98,22 @@ export class ProductFormComponent implements OnInit {
       },
     });
   }
+
+  deleteProduct() {
+    this.loaderService.overrideLoading(LoadingIndicator.SUBMIT_MODAL);
+
+    this.productService.deleteProduct(this.data.content.id).subscribe({
+      next: (data) => {
+        if (data.status) {
+          this.snackbarService.showSuccessSnackbar(data.message);
+          this.dialogRef.close(true);
+        } else {
+          this.snackbarService.showWarningSnackbar(data.message);
+        }
+      },
+      error: () => {
+        this.snackbarService.showErrorSnackbar();
+      },
+    });
+  }
 }

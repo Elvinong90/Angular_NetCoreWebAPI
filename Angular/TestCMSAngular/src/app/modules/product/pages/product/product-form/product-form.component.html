@@ -1,46 +1,62 @@
-<form [formGroup]="dataForm">
-  <app-dialog-header
-    [title]="
-      data.formaction === FormAction.Add ? 'New Product' : 'Edit Product'
-    "
-  ></app-dialog-header>
+<ng-template
+  [ngIf]="
+    data.formaction === FormAction.Add || data.formaction === FormAction.Update
+  "
+>
+  <form [formGroup]="dataForm">
+    <app-dialog-header
+      [title]="
+        data.formaction === FormAction.Add ? 'New Product' : 'Edit Product'
+      "
+    ></app-dialog-header>
 
-  <mat-form-field class="mat-formfield-container">
-    <mat-label>Product No</mat-label>
-    <input
-      matInput
-      formControlName="ProductNo"
-      placeholder="Please Enter"
-      autocomplete="false"
-    />
-  </mat-form-field>
+    <mat-form-field class="mat-formfield-container">
+      <mat-label>Product No</mat-label>
+      <input
+        matInput
+        formControlName="ProductNo"
+        placeholder="Please Enter"
+        autocomplete="false"
+      />
+    </mat-form-field>
 
-  <mat-form-field class="mat-formfield-container">
-    <mat-label>Description</mat-label>
-    <textarea
-      matInput
-      formControlName="Description"
-      placeholder="Please Enter"
-      autocomplete="false"
-      rows="2"
-    ></textarea>
-  </mat-form-field>
+    <mat-form-field class="mat-formfield-container">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="Description"
+        placeholder="Please Enter"
+        autocomplete="false"
+        rows="2"
+      ></textarea>
+    </mat-form-field>
 
-  <mat-form-field class="mat-formfield-container">
-    <mat-label>Price</mat-label>
-    <input
-      matInput
-      formControlName="Price"
-      placeholder="Please Enter"
-      autocomplete="false"
-    />
-  </mat-form-field>
+    <mat-form-field class="mat-formfield-container">
+      <mat-label>Price</mat-label>
+      <input
+        matInput
+        formControlName="Price"
+        placeholder="Please Enter"
+        autocomplete="false"
+      />
+    </mat-form-field>
 
+    <app-dialog-footer
+      [confirmTitle]="
+        data.formaction === FormAction.Add ? 'Submit' : 'Save Changes'
+      "
+      (confirmClick)="submitForm()"
+      [dialogRef]="dialogRef"
+    ></app-dialog-footer></form
+></ng-template>
+
+<ng-template [ngIf]="data.formaction === FormAction.Delete">
+  <app-dialog-header></app-dialog-header>
+  <mat-dialog-content>
+    Are you sure want to delete the product?
+  </mat-dialog-content>
   <app-dialog-footer
-    [confirmTitle]="
-      data.formaction === FormAction.Add ? 'Submit' : 'Save Changes'
-    "
-    (confirmClick)="submitForm()"
+    (confirmClick)="deleteProduct()"
     [dialogRef]="dialogRef"
   ></app-dialog-footer>
-</form>
+</ng-template>

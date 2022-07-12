@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -102,7 +96,14 @@ export class ProductComponent implements OnInit, AfterViewInit {
     if (this.singleData) {
       const passData: DialogPassData = {
         formaction: FormAction.Delete,
+        content: this.singleData,
       };
+
+      let dialogRef = this.dialog.open(ProductFormComponent, {
+        data: passData,
+      });
+
+      this.getDialogResult(dialogRef);
     }
   }
 
