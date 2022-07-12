@@ -1,1 +1,84 @@
-<p>customer-form works!</p>
+<ng-template
+  [ngIf]="
+    data.formaction === FormAction.Add || data.formaction === FormAction.Update
+  "
+>
+  <form [formGroup]="dataForm">
+    <app-dialog-header
+      [title]="
+        data.formaction === FormAction.Add ? 'New Customer' : 'Edit Customer'
+      "
+    ></app-dialog-header>
+
+    <mat-form-field class="mat-formfield-container">
+      <mat-label>Customer ID</mat-label>
+      <input
+        matInput
+        formControlName="CustomerID"
+        placeholder="Please Enter"
+        autocomplete="false"
+      />
+      <mat-error *ngIf="onError('CustomerID', 'required')"
+        >Customer ID is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="mat-formfield-container">
+      <mat-label>Name</mat-label>
+      <textarea
+        matInput
+        formControlName="FullName"
+        placeholder="Please Enter"
+        autocomplete="false"
+        rows="2"
+      ></textarea>
+      <mat-error *ngIf="onError('FullName', 'required')"
+        >Name is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="mat-formfield-container">
+      <mat-label>ID Type</mat-label>
+      <input
+        matInput
+        formControlName="IDType"
+        placeholder="Please Enter"
+        autocomplete="false"
+      />
+      <mat-error *ngIf="onError('IDType', 'required')"
+        >ID Type is required</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field class="mat-formfield-container">
+      <mat-label>ID No</mat-label>
+      <input
+        matInput
+        formControlName="IDNo"
+        placeholder="Please Enter"
+        autocomplete="false"
+      />
+      <mat-error *ngIf="onError('IDNo', 'required')"
+        >ID No is required</mat-error
+      >
+    </mat-form-field>
+
+    <app-dialog-footer
+      [confirmTitle]="
+        data.formaction === FormAction.Add ? 'Submit' : 'Save Changes'
+      "
+      (confirmClick)="submitForm()"
+      [dialogRef]="dialogRef"
+    ></app-dialog-footer></form
+></ng-template>
+
+<ng-template [ngIf]="data.formaction === FormAction.Delete">
+  <app-dialog-header></app-dialog-header>
+  <mat-dialog-content>
+    Are you sure want to delete the product?
+  </mat-dialog-content>
+  <app-dialog-footer
+    (confirmClick)="deleteCustomer()"
+    [dialogRef]="dialogRef"
+  ></app-dialog-footer>
+</ng-template>

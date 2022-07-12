@@ -18,6 +18,9 @@
         placeholder="Please Enter"
         autocomplete="false"
       />
+      <mat-error *ngIf="onError('ProductNo', 'required')"
+        >Product No is required</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field class="mat-formfield-container">
@@ -29,6 +32,9 @@
         autocomplete="false"
         rows="2"
       ></textarea>
+      <mat-error *ngIf="onError('Description', 'required')"
+        >Description is required</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field class="mat-formfield-container">
@@ -39,6 +45,9 @@
         placeholder="Please Enter"
         autocomplete="false"
       />
+      <mat-error *ngIf="onError('Price', 'required')"
+        >Price is required</mat-error
+      >
     </mat-form-field>
 
     <app-dialog-footer

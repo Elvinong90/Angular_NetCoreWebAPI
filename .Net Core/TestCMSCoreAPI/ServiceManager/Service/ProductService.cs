@@ -65,11 +65,7 @@ namespace ServiceManager.Service
         {
             var product = await _unitOfWork.Products.GetById(ID);
 
-            product.Deleted = true;
-            product.ModifiedBy = UserID;
-            product.DateModified = DateTime.UtcNow;
-
-            _unitOfWork.Products.Update(product);
+            _unitOfWork.Products.Delete(product);
             int result = await _unitOfWork.Commit();
 
             return Convert.ToBoolean(result);

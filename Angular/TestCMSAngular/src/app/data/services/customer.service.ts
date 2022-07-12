@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CustomerDTO } from '../schema/customer.model';
+import { CustomerDTO, CustomerDetailDTO } from '../schema/customer.model';
+import { GenericObject } from 'src/app/shared/models/common.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -9,15 +10,29 @@ import { environment } from 'src/environments/environment';
 export class CustomerService {
   private WebAddress = environment.WebAddress;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getCustomers() {
-    this.httpClient.get<CustomerDTO[]>(this.WebAddress + '/api/customer');
+    return this.http.get<CustomerDTO[]>(this.WebAddress + '/api/customer');
   }
 
-  addCustomer() {}
+  addCustomer(model: CustomerDetailDTO) {
+    return this.http.post<GenericObject>(
+      this.WebAddress + '/api/customer',
+      model
+    );
+  }
 
-  updateCustomer() {}
+  updateCustomer(ID: string, model: CustomerDetailDTO) {
+    return this.http.put<GenericObject>(
+      this.WebAddress + '/api/customer/' + ID,
+      model
+    );
+  }
 
-  deleteCustomer() {}
+  deleteCustomer(ID: string) {
+    return this.http.delete<GenericObject>(
+      this.WebAddress + '/api/customer/' + ID
+    );
+  }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceManager.DTO;
 using ServiceManager.Interface;
+using TestCMSCoreAPI.Helpers;
 
 namespace TestCMSCoreAPI.Controllers
 {
@@ -39,20 +40,41 @@ namespace TestCMSCoreAPI.Controllers
         public async Task<IActionResult> CreateCustomer([FromBody] CustomerDTO.OnAdd Request)
         {
             bool result = await customerService.AddCustomer(Request, UserID);
-            return Ok(result);
+
+            var output = new CommonDto.GenericObject()
+            {
+                Status = result,
+                Message = result ? Constants.Message.msgCreateOK : Constants.Message.msgCreateNotOK
+            };
+
+            return Ok(output);
         }
 
         [HttpPut("{ID}")]
         public async Task<IActionResult> UpdateCustomer(Guid ID, [FromBody] CustomerDTO.OnUpdate Request)
         {
             bool result = await customerService.UpdateCustomer(ID, Request, UserID);
-            return Ok(result);
+
+            var output = new CommonDto.GenericObject()
+            {
+                Status = result,
+                Message = result ? Constants.Message.msgUpdateOK : Constants.Message.msgUpdateNotOK
+            };
+
+            return Ok(output);
         }
 
         [HttpDelete("{ID}")]
         public async Task<IActionResult> DeleteCustomer(Guid ID)
         {
             bool result = await customerService.DeleteCustomer(ID, UserID);
+
+            var output = new CommonDto.GenericObject()
+            {
+                Status = result,
+                Message = result ? Constants.Message.msgDeleteOK : Constants.Message.msgDeleteNotOK
+            };
+
             return Ok(result);
         }
     }
