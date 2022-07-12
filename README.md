@@ -1,7 +1,7 @@
 # TestCMS
 
-Testing application
+Testing Learning Application
 - Frontend : Angular
 - Backend  : .NET Core Web API
 
-two tables for CRUD of customers and products.
+Two tables are provided to manage customer and products.
