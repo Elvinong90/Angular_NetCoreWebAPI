@@ -31,7 +31,7 @@ namespace TestCMSCoreAPI.Helpers
 
                 var response = _environment.IsDevelopment() ?
                     new CustomErrorDTO(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString()) :
-                    new CustomErrorDTO(context.Response.StatusCode, "Internal Server Error");
+                    new CustomErrorDTO(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString());
 
                 var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
