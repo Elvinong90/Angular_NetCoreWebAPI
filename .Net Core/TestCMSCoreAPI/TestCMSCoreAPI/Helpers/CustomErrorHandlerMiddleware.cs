@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using TestCMSCoreAPI.DTO;
 
 namespace TestCMSCoreAPI.Helpers
 {

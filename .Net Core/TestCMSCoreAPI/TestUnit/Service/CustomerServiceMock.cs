@@ -2,7 +2,7 @@
 
 namespace TestUnit.Service
 {
-    internal class CustomerServiceMock
+    public class CustomerServiceMock
     {
         private readonly List<CustomerDTO.FullDetail> customers;
 
