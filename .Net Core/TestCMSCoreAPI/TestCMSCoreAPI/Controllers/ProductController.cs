@@ -5,7 +5,7 @@ using TestCMSCoreAPI.Helpers;
 
 namespace TestCMSCoreAPI.Controllers
 {
-    [Route("api/Product")]
+    [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -23,7 +23,7 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{ID}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetProductByID(Guid ID)
         {
             var product = await productService.GetProductByID(ID);
@@ -50,7 +50,7 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(output);
         }
 
-        [HttpPut("{ID}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(Guid ID, [FromBody] ProductDTO.OnUpdate Request)
         {
             bool result = await productService.UpdateProduct(ID, Request, UserID);
@@ -64,7 +64,7 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(output);
         }
 
-        [HttpDelete("{ID}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(Guid ID)
         {
             bool result = await productService.DeleteProduct(ID, UserID);

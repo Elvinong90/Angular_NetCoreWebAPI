@@ -5,7 +5,7 @@ using TestCMSCoreAPI.Helpers;
 
 namespace TestCMSCoreAPI.Controllers
 {
-    [Route("api/Customer")]
+    [Route("api/customers")]
     [ApiController]
     public class CustomerController : ControllerBase
     {
@@ -23,7 +23,7 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(customers);
         }
 
-        [HttpGet("{ID}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomerByID(Guid ID)
         {
             var customer = await customerService.GetCustomerByID(ID);
@@ -50,7 +50,7 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(output);
         }
 
-        [HttpPut("{ID}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCustomer(Guid ID, [FromBody] CustomerDTO.OnUpdate Request)
         {
             bool result = await customerService.UpdateCustomer(ID, Request, UserID);
@@ -64,7 +64,7 @@ namespace TestCMSCoreAPI.Controllers
             return Ok(output);
         }
 
-        [HttpDelete("{ID}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(Guid ID)
         {
             bool result = await customerService.DeleteCustomer(ID, UserID);
