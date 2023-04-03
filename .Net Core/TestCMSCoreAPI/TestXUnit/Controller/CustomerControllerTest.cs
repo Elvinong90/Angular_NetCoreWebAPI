@@ -2,14 +2,14 @@
 using Moq;
 using ServiceManager.DTO;
 using ServiceManager.Interface;
+using ServiceManager.ServiceMock;
 using TestCMSCoreAPI.Controllers;
-using TestUnit.Service;
 
-namespace TestUnit.Controller
+namespace TestXUnit.Controller
 {
     public class CustomerTest
     {
-        private readonly CustomerServiceMock _service;
+        private CustomerServiceMock _service;
 
         public CustomerTest()
         {
@@ -23,7 +23,7 @@ namespace TestUnit.Controller
             service.Setup(_ => _.GetCustomerList()).ReturnsAsync(_service.GetCustomerList());
             var controller = new CustomerController(service.Object);
 
-            var result = await controller.GetAllCustomers() as OkObjectResult;
+            var result = (OkObjectResult) await controller.GetAllCustomers();
             Assert.IsType<OkObjectResult>(result);
         }
 
@@ -35,6 +35,8 @@ namespace TestUnit.Controller
             var controller = new CustomerController(service.Object);
 
             var result = (OkObjectResult) await controller.GetAllCustomers();
+            Assert.IsType<OkObjectResult>(result);
+
             var items = Assert.IsType<List<CustomerDTO.FullDetail>>(result.Value);
             Assert.Equal(3, items.Count);
         }
@@ -62,9 +64,9 @@ namespace TestUnit.Controller
             var controller = new CustomerController(service.Object);
 
             var result = (OkObjectResult) await controller.GetCustomerByID(guid);
-            var customer = Assert.IsType<CustomerDTO.FullDetail>(result.Value);
-
             Assert.IsType<OkObjectResult>(result);
+
+            var customer = Assert.IsType<CustomerDTO.FullDetail>(result.Value);
             Assert.Equal("A001", customer.Detail.CustomerID);
         }
 

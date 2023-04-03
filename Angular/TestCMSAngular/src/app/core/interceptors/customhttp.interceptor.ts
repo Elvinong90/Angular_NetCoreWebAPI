@@ -5,15 +5,12 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import {
-  LoaderService,
-  LoadingIndicator,
-} from 'src/app/shared/services/loader.service';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 import { Observable, finalize } from 'rxjs';
 
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
-  requestCount = 0;
+  private requestCount = 0;
 
   constructor(private loaderService: LoaderService) {}
 

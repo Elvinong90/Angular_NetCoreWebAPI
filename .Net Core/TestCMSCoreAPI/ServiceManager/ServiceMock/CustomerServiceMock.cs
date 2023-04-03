@@ -1,6 +1,6 @@
 ﻿using ServiceManager.DTO;
 
-namespace TestUnit.Service
+namespace ServiceManager.ServiceMock
 {
     public class CustomerServiceMock
     {
