@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import {
   LoaderService,
   LoadingIndicator,
@@ -24,13 +24,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./customer-form.component.scss'],
 })
 export class CustomerFormComponent implements OnInit {
-  dataForm!: FormGroup;
+  dataForm!: UntypedFormGroup;
   FormAction = FormAction;
 
   constructor(
     public dialogRef: MatDialogRef<CustomerFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogPassData,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private loaderService: LoaderService,
     private snackbarService: SnackbarService,
     private customerService: CustomerService

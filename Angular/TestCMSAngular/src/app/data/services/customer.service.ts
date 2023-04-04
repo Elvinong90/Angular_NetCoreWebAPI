@@ -13,26 +13,26 @@ export class CustomerService {
   constructor(private http: HttpClient) {}
 
   getCustomers() {
-    return this.http.get<CustomerDTO[]>(this.WebAddress + '/api/customer');
+    return this.http.get<CustomerDTO[]>(this.WebAddress + '/api/customers');
   }
 
   addCustomer(model: CustomerDetailDTO) {
     return this.http.post<GenericObject>(
-      this.WebAddress + '/api/customer',
+      this.WebAddress + '/api/customers',
       model
     );
   }
 
   updateCustomer(ID: string, model: CustomerDetailDTO) {
     return this.http.put<GenericObject>(
-      this.WebAddress + '/api/customer/' + ID,
+      this.WebAddress + '/api/customers/' + ID,
       model
     );
   }
 
   deleteCustomer(ID: string) {
     return this.http.delete<GenericObject>(
-      this.WebAddress + '/api/customer/' + ID
+      this.WebAddress + '/api/customers/' + ID
     );
   }
 }

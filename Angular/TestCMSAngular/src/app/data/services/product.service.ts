@@ -13,26 +13,26 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProducts() {
-    return this.http.get<ProductDTO[]>(this.WebAddress + '/api/product');
+    return this.http.get<ProductDTO[]>(this.WebAddress + '/api/products');
   }
 
   addProduct(model: ProductDetailDTO) {
     return this.http.post<GenericObject>(
-      this.WebAddress + '/api/product',
+      this.WebAddress + '/api/products',
       model
     );
   }
 
   updateProduct(ID: string, model: ProductDetailDTO) {
     return this.http.put<GenericObject>(
-      this.WebAddress + '/api/product/' + ID,
+      this.WebAddress + '/api/products/' + ID,
       model
     );
   }
 
   deleteProduct(ID: string) {
     return this.http.delete<GenericObject>(
-      this.WebAddress + '/api/product/' + ID
+      this.WebAddress + '/api/products/' + ID
     );
   }
 }
