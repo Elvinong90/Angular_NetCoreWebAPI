@@ -1,5 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
 import {
   LoaderService,
   LoadingIndicator,
