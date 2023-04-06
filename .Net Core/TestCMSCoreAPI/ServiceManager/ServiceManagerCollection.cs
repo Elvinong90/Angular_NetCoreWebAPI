@@ -19,8 +19,8 @@ namespace ServiceManager
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICustomerService, CustomerService>();
 
             return services;
         }
