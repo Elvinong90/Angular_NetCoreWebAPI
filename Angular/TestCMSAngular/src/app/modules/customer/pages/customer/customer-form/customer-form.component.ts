@@ -1,9 +1,5 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-} from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import {
   LoaderService,
   LoadingIndicator,
@@ -28,23 +24,25 @@ import { Observable, Subject, takeUntil } from 'rxjs';
   styleUrls: ['./customer-form.component.scss'],
 })
 export class CustomerFormComponent implements OnInit, OnDestroy {
-  dataForm!: UntypedFormGroup;
-  FormAction = FormAction;
+  dataForm = new FormGroup({
+    CustomerID: new FormControl('', [Validators.required]),
+    FullName: new FormControl('', [Validators.required]),
+    IDType: new FormControl('', [Validators.required]),
+    IDNo: new FormControl('', [Validators.required]),
+  });
 
+  FormAction = FormAction;
   destroyed = new Subject<void>();
 
   constructor(
     public dialogRef: MatDialogRef<CustomerFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogPassData,
-    private formBuilder: UntypedFormBuilder,
     private loaderService: LoaderService,
     private snackbarService: SnackbarService,
     private customerService: CustomerService
   ) {}
 
   ngOnInit(): void {
-    this.initializeForm();
-
     if (this.data.formaction === FormAction.Update) {
       this.loadFormData();
     }
@@ -53,15 +51,6 @@ export class CustomerFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed.next();
     this.destroyed.complete();
-  }
-
-  initializeForm() {
-    this.dataForm = this.formBuilder.group({
-      CustomerID: ['', [Validators.required]],
-      FullName: ['', [Validators.required]],
-      IDType: ['', [Validators.required]],
-      IDNo: ['', [Validators.required]],
-    });
   }
 
   loadFormData() {
@@ -87,10 +76,10 @@ export class CustomerFormComponent implements OnInit, OnDestroy {
     this.loaderService.overrideLoading(LoadingIndicator.SUBMIT_MODAL);
 
     var model: CustomerDetailDTO = {
-      customerID: this.dataForm.get('CustomerID')?.value,
-      fullName: this.dataForm.get('FullName')?.value,
-      idType: this.dataForm.get('IDType')?.value,
-      idNo: this.dataForm.get('IDNo')?.value,
+      customerID: this.dataForm.value.CustomerID!,
+      fullName: this.dataForm.value.FullName!,
+      idType: this.dataForm.value.IDType!,
+      idNo: this.dataForm.value.IDNo!,
     };
 
     const postAction: Observable<GenericObject> =

@@ -1,9 +1,5 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   LoaderService,
   LoadingIndicator,
@@ -28,23 +24,24 @@ import { Observable, Subject, takeUntil } from 'rxjs';
   styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent implements OnInit, OnDestroy {
-  dataForm!: UntypedFormGroup;
-  FormAction = FormAction;
+  dataForm = new FormGroup({
+    ProductNo: new FormControl('', [Validators.required]),
+    Description: new FormControl('', [Validators.required]),
+    Price: new FormControl(0, [Validators.required]),
+  });
 
+  FormAction = FormAction;
   destroyed = new Subject<void>();
 
   constructor(
     public dialogRef: MatDialogRef<ProductFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogPassData,
-    private formBuilder: UntypedFormBuilder,
     private loaderService: LoaderService,
     private snackbarService: SnackbarService,
     private productService: ProductService
   ) {}
 
   ngOnInit(): void {
-    this.initializeForm();
-
     if (this.data.formaction === FormAction.Update) {
       this.loadFormData();
     }
@@ -53,14 +50,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed.next();
     this.destroyed.complete();
-  }
-
-  initializeForm() {
-    this.dataForm = this.formBuilder.group({
-      ProductNo: ['', [Validators.required]],
-      Description: ['', [Validators.required]],
-      Price: [0, [Validators.required]],
-    });
   }
 
   loadFormData() {
@@ -85,9 +74,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     this.loaderService.overrideLoading(LoadingIndicator.SUBMIT_MODAL);
 
     var model: ProductDetailDTO = {
-      productNo: this.dataForm.get('ProductNo')?.value,
-      description: this.dataForm.get('Description')?.value,
-      price: this.dataForm.get('Price')?.value,
+      productNo: this.dataForm.value.ProductNo!,
+      description: this.dataForm.value.Description!,
+      price: this.dataForm.value.Price!,
     };
 
     const postAction: Observable<GenericObject> =
