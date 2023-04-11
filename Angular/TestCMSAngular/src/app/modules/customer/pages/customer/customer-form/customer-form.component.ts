@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -20,16 +20,18 @@ import {
   GenericObject,
 } from 'src/app/shared/models/common.model';
 import { FormAction } from 'src/app/shared/enum/common.enum';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-customer-form',
   templateUrl: './customer-form.component.html',
   styleUrls: ['./customer-form.component.scss'],
 })
-export class CustomerFormComponent implements OnInit {
+export class CustomerFormComponent implements OnInit, OnDestroy {
   dataForm!: UntypedFormGroup;
   FormAction = FormAction;
+
+  destroyed = new Subject<void>();
 
   constructor(
     public dialogRef: MatDialogRef<CustomerFormComponent>,
@@ -46,6 +48,11 @@ export class CustomerFormComponent implements OnInit {
     if (this.data.formaction === FormAction.Update) {
       this.loadFormData();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
   }
 
   initializeForm() {
@@ -91,7 +98,7 @@ export class CustomerFormComponent implements OnInit {
         ? this.customerService.addCustomer(model)
         : this.customerService.updateCustomer(this.data.content.id, model);
 
-    postAction.subscribe({
+    postAction.pipe(takeUntil(this.destroyed)).subscribe({
       next: (data) => {
         if (data.status) {
           this.snackbarService.showSuccessSnackbar(data.message);
@@ -109,18 +116,21 @@ export class CustomerFormComponent implements OnInit {
   deleteCustomer() {
     this.loaderService.overrideLoading(LoadingIndicator.SUBMIT_MODAL);
 
-    this.customerService.deleteCustomer(this.data.content.id).subscribe({
-      next: (data) => {
-        if (data.status) {
-          this.snackbarService.showSuccessSnackbar(data.message);
-          this.dialogRef.close(true);
-        } else {
-          this.snackbarService.showWarningSnackbar(data.message);
-        }
-      },
-      error: () => {
-        this.snackbarService.showErrorSnackbar();
-      },
-    });
+    this.customerService
+      .deleteCustomer(this.data.content.id)
+      .pipe(takeUntil(this.destroyed))
+      .subscribe({
+        next: (data) => {
+          if (data.status) {
+            this.snackbarService.showSuccessSnackbar(data.message);
+            this.dialogRef.close(true);
+          } else {
+            this.snackbarService.showWarningSnackbar(data.message);
+          }
+        },
+        error: () => {
+          this.snackbarService.showErrorSnackbar();
+        },
+      });
   }
 }

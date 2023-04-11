@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,13 +15,14 @@ import { DialogPassData } from 'src/app/shared/models/common.model';
 import { ModuleType } from 'src/app/shared/enum/module.enum';
 import { FormAction } from 'src/app/shared/enum/common.enum';
 import { CustomerFormComponent } from './customer-form/customer-form.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.scss'],
 })
-export class CustomerComponent implements OnInit, AfterViewInit {
+export class CustomerComponent implements OnInit, AfterViewInit, OnDestroy {
   Module = ModuleType.Customer;
 
   displayedColumns = ['customerID', 'fullName', 'idNo', 'action'];
@@ -23,6 +30,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   listofData: CustomerDTO[] = [];
   singleData: CustomerDTO | undefined;
 
+  destroyed = new Subject<void>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -49,13 +57,21 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     };
   }
 
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
+
   getCustomers() {
-    this.customerService.getCustomers().subscribe({
-      next: (data) => {
-        this.dataSource.data = this.listofData = data;
-      },
-      error: () => {},
-    });
+    this.customerService
+      .getCustomers()
+      .pipe(takeUntil(this.destroyed))
+      .subscribe({
+        next: (data) => {
+          this.dataSource.data = this.listofData = data;
+        },
+        error: () => {},
+      });
   }
 
   getCustomerData(id: string) {

@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,13 +15,14 @@ import { DialogPassData } from 'src/app/shared/models/common.model';
 import { ModuleType } from 'src/app/shared/enum/module.enum';
 import { FormAction } from 'src/app/shared/enum/common.enum';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
 })
-export class ProductComponent implements OnInit, AfterViewInit {
+export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   Module = ModuleType.Product;
 
   displayedColumns = ['productNo', 'description', 'price', 'action'];
@@ -23,6 +30,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
   listofData: ProductDTO[] = [];
   singleData: ProductDTO | undefined;
 
+  destroyed = new Subject<void>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -48,13 +56,21 @@ export class ProductComponent implements OnInit, AfterViewInit {
     };
   }
 
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
+
   getProducts() {
-    this.productService.getProducts().subscribe({
-      next: (data) => {
-        this.dataSource.data = this.listofData = data;
-      },
-      error: () => {},
-    });
+    this.productService
+      .getProducts()
+      .pipe(takeUntil(this.destroyed))
+      .subscribe({
+        next: (data) => {
+          this.dataSource.data = this.listofData = data;
+        },
+        error: () => {},
+      });
   }
 
   getProductData(id: string) {
