@@ -1,6 +1,4 @@
-# TestCMS
-
-Testing Learning Application
+Learning Application
 - Frontend : Angular
 - Backend  : .NET Core Web API
 
